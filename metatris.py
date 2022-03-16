@@ -123,27 +123,33 @@ class MetaTris:
         #5: rotate_right,
         #6: idle,
         done = False     
+        pause = False 
+        for event in pygame.event.get():
 
-        for ev in pygame.event.get():
-
-            if ev.type == pygame.QUIT or (ev.type == pygame.KEYDOWN and ev.unicode == 'q'):
+            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.unicode == 'q'):
                 done = True
             # Detect the key evevents for game control.
-            if ev.type == pygame.KEYDOWN:
-                if ev.key == pygame.K_DOWN:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_DOWN:
                     self._exec_normal_action(3)
-                if ev.key == pygame.K_LEFT:
+                if event.key == pygame.K_LEFT:
                     self._exec_normal_action(0)
-                if ev.key == pygame.K_RIGHT:
+                if event.key == pygame.K_RIGHT:
                     self._exec_normal_action(1)
-                if ev.key == pygame.K_SPACE:
+                if event.key == pygame.K_a:
                     self._exec_normal_action(4)
+                if event.key == pygame.K_d:
+                    self._exec_normal_action(5)
+                if event.key == pygame.K_SPACE:
+                    self._exec_normal_action(2)
+                
                 print(self)
-                # if ev.key == pygame.K_p:
-                #     self.pause()
-            if ev.type == TIMER_MOVE_EVENT:
+                if event.key == pygame.K_p:
+                    pause=True 
+            if event.type == TIMER_MOVE_EVENT :
                 print(self)
-                self._exec_normal_action(3)
+                if not pause :
+                    self._exec_normal_action(3)
 
         # Update time 
         self.time += 1
@@ -175,6 +181,8 @@ class MetaTris:
 
     def run (self) :
         pygame.init()
+        screen = pygame.display.set_mode((1, 1))
+
         self.set_move_timer()
 
 
