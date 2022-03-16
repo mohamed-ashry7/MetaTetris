@@ -12,16 +12,13 @@ from utils.tetris_engine_utils import *
 import keyboard
 import pandas as pd 
 
-class TetrisEngine:
 
-    def __init__(self, width = 10 , height = 20  ,
-    state_calculator='schwenker2008',eval_fn='ashry', penalty =-100,
-    clamp_diff=3,melax_factor=2):
+class MetaTris:
+
+    def __init__(self, width = 10 , height = 20):
     
         self.width = int(width)
         self.height = int(height)
-        self.state_calculator = state_calculator
-        self.eval_fn = eval_fn
         self.board = np.zeros(shape=(width, height), dtype=np.float)
 
         # actions are triggered by letters
@@ -180,7 +177,7 @@ class TetrisEngine:
         #5: rotate_right,
         #6: idle,  
 if __name__=="__main__":
-    engine = TetrisEngine(10,20)
+    engine = MetaTris(10,20)
     done = False 
     while not done: 
         action = int(input("Enter the action\n"))
