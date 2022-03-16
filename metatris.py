@@ -39,7 +39,7 @@ class MetaTris:
         
         
         self.group_actions_number=4*self.width # Means that there are 4 possible rotations and width-number of translations +1 for idle translations
-        
+        self.pause = False 
         # for running the engine
         self.time = -1
         self.score = -1
@@ -123,13 +123,16 @@ class MetaTris:
         #5: rotate_right,
         #6: idle,
         done = False     
-        pause = False 
         for event in pygame.event.get():
 
-            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.unicode == 'q'):
-                done = True
+            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_q):
+                return self.cleared_lines_per_move,True
             # Detect the key evevents for game control.
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    self.pause= not self.pause
+                if self.pause:
+                    continue
                 if event.key == pygame.K_DOWN:
                     self._exec_normal_action(3)
                 if event.key == pygame.K_LEFT:
@@ -144,11 +147,9 @@ class MetaTris:
                     self._exec_normal_action(2)
                 
                 print(self)
-                if event.key == pygame.K_p:
-                    pause=True 
             if event.type == TIMER_MOVE_EVENT :
                 print(self)
-                if not pause :
+                if not self.pause :
                     self._exec_normal_action(3)
 
         # Update time 
