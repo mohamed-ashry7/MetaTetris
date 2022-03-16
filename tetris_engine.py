@@ -177,6 +177,8 @@ class MetaTris:
         #5: rotate_right,
         #6: idle,  
 if __name__=="__main__":
+
+    
     engine = MetaTris(10,20)
     done = False 
     while not done: 
