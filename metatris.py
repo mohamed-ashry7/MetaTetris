@@ -2,25 +2,27 @@
 
 
 
-# This File is Originally taken from https://github.com/jaybutera/tetrisRL. 
-# There are major modification to this environment to be fine with the model chosen.
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
+import math
 
 import numpy as np
 import random
+import pygame
+# import pandas as pd
+ 
 from controllers import basic_evaluation_fn,best_action
 from utils.tetris_engine_utils import *
-import keyboard
-import pandas as pd 
-
+from utils.constants import * 
 
 class MetaTris:
 
-    def __init__(self, width = 10 , height = 20):
+    def __init__(self, width = 10 , height = 20,speed=1):
     
         self.width = int(width)
         self.height = int(height)
         self.board = np.zeros(shape=(width, height), dtype=np.float)
-
+        self.speed = speed
         # actions are triggered by letters
         self.value_action_map = {
             0: left,
@@ -67,6 +69,7 @@ class MetaTris:
                 self.piece_number=i
                 return shapes[shape_names[i]]
 
+
     def _new_piece(self):
         # Place randomly on x-axis with 2 tiles padding
         #x = int((self.width/2+1) * np.random.rand(1,1)[0,0]) + 2
@@ -109,7 +112,7 @@ class MetaTris:
         self.shape, self.anchor = soft_drop(self.shape, self.anchor, self.board)
 
 
-    def step(self, action):
+    def step(self):
         
         #Basic Actions for normal actions but the groud are up tp 40 actions
         #0: left,
@@ -119,8 +122,29 @@ class MetaTris:
         #4: rotate_left,
         #5: rotate_right,
         #6: idle,
-        
-        self._exec_normal_action(action)
+        done = False     
+
+        for ev in pygame.event.get():
+
+            if ev.type == pygame.QUIT or (ev.type == pygame.KEYDOWN and ev.unicode == 'q'):
+                done = True
+            # Detect the key evevents for game control.
+            if ev.type == pygame.KEYDOWN:
+                if ev.key == pygame.K_DOWN:
+                    self._exec_normal_action(3)
+                if ev.key == pygame.K_LEFT:
+                    self._exec_normal_action(0)
+                if ev.key == pygame.K_RIGHT:
+                    self._exec_normal_action(1)
+                if ev.key == pygame.K_SPACE:
+                    self._exec_normal_action(4)
+                print(self)
+                # if ev.key == pygame.K_p:
+                #     self.pause()
+            if ev.type == TIMER_MOVE_EVENT:
+                print(self)
+                self._exec_normal_action(3)
+
         # Update time 
         self.time += 1
 
@@ -139,6 +163,25 @@ class MetaTris:
                 
         
         return self.cleared_lines_per_move, done
+
+    def set_move_timer(self):
+        """
+        Setup the move timer to the 
+        """
+        # Setup the time to fire the move event. Minimal allowed value is 1
+        speed = math.floor(MOVE_TICK / self.speed)
+        speed = max(1,speed)
+        pygame.time.set_timer(TIMER_MOVE_EVENT,speed)
+
+    def run (self) :
+        pygame.init()
+        self.set_move_timer()
+
+
+        done =False 
+        while not done:
+            _, done = self.step()
+
 
     def clear(self):
         self.time = 0
@@ -180,11 +223,7 @@ if __name__=="__main__":
 
     
     engine = MetaTris(10,20)
-    done = False 
-    while not done: 
-        action = int(input("Enter the action\n"))
-        lines,done=engine.step(action)
-        print(engine)
+    engine.run()
 
 
 
