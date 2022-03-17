@@ -109,7 +109,7 @@ class MetaTris:
     def _exec_normal_action(self,action):
         self.anchor = (int(self.anchor[0]), int(self.anchor[1]))
         self.shape, self.anchor = self.value_action_map[action](self.shape, self.anchor, self.board)
-        self.shape, self.anchor = soft_drop(self.shape, self.anchor, self.board)
+        # self.shape, self.anchor = soft_drop(self.shape, self.anchor, self.board)
 
 
     def step(self):

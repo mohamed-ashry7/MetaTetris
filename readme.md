@@ -27,7 +27,7 @@ q-> for quiting
 
 
 ```python
-from matatris import MetaTris
+from metatris import MetaTris
  
 width,height = 10,20
 env = MetaTris(width,height)
