@@ -13,6 +13,10 @@ shape_names = ['T', 'J', 'L', 'Z', 'S', 'I', 'O']
 
 
 
+const randomShape = ()=>{
+    const shape = shape_names[Math.floor(Math.random()*shape_names.length)];
+    return shapes[shape]
+} ; 
 const rotated = (shape, cclk=False )=>{
     if(cclk){
         return shape.map(([i,j]) =>{
@@ -27,7 +31,7 @@ const rotated = (shape, cclk=False )=>{
 };
 
 
-const isOccupied = (shape,anchor,board)=>{
+ const isOccupied = (shape,anchor,board)=>{
 
     for(const [i,j] of shape){
         const [x,y] = [anchor[0]+i,anchor[1]+j]
@@ -44,25 +48,25 @@ const isOccupied = (shape,anchor,board)=>{
 };
 
 
-const left = (shape,anchor, board)=>{
+ const left = (shape,anchor, board)=>{
     const newAnchor = [anchor[0]-1,anchor[1]]
     return isOccupied(shape,newAnchor,board)?[shape,anchor]:[shape,newAnchor]
 };
 
 
 
-const right = (shape,anchor, board)=>{
+ const right = (shape,anchor, board)=>{
     const newAnchor = [anchor[0]+1,anchor[1]]
     return isOccupied(shape,newAnchor,board)?[shape,anchor]:[shape,newAnchor]
 };
 
 
-const softDrop =(shape,anchor, board)=>{
+ const softDrop =(shape,anchor, board)=>{
     const newAnchor = [anchor[0],anchor[1]+1]
     return isOccupied(shape,newAnchor,board)?[shape,anchor]:[shape,newAnchor]
 };
 
-const hardDrop = (shape,anchor,board)=>{
+ const hardDrop = (shape,anchor,board)=>{
     while (true){
         [_,newAnchor] = softDrop(shape,anchor,board)
         if(JSON.stringify(newAnchor)==JSON.stringify(anchor)){
@@ -74,17 +78,22 @@ const hardDrop = (shape,anchor,board)=>{
 
 
 
-const rotateLeft = (shape,anchor,board)=>{
+ const rotateLeft = (shape,anchor,board)=>{
     const newShape = rotated(shape,false)
     return isOccupied(newShape,anchor,board)?[shape,anchor]:[newShape,anchor]
 };
 
-const rotateRight = (shape,anchor,board)=>{
+ const rotateRight = (shape,anchor,board)=>{
     const newShape = rotated(shape,true)
     return isOccupied(newShape,anchor,board)?[shape,anchor]:[newShape,anchor]
 };
 
 
-const idle = (shape,anchor , board )=>{
+ const idle = (shape,anchor , board )=>{
     return [shape,anchor]
 };
+
+
+module.exports= {
+    randomShape,rotated,rotateLeft,rotateRight,left,right,softDrop,hardDrop,idle
+}
