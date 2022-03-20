@@ -17,6 +17,8 @@
     "nodemon": "^2.0.15"
   },
   "dependencies": {
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "numjs": "^0.16.1",
+    "prompt-sync": "^4.2.0"
   }
 }

@@ -95,5 +95,5 @@ const rotated = (shape, cclk=False )=>{
 
 
 module.exports= {
-    randomShape,rotated,rotateLeft,rotateRight,left,right,softDrop,hardDrop,idle
+    isOccupied,randomShape,rotated,rotateLeft,rotateRight,left,right,softDrop,hardDrop,idle
 }
