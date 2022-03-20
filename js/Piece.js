@@ -11,7 +11,6 @@ pieces = {
 }
 pieceNames = ['T', 'J', 'L', 'Z', 'S', 'I', 'O']
 
-
 const newPiece = ()=>{
     const piece = pieceNames[Math.floor(Math.random()*pieceNames.length)];
     return pieces[piece]
