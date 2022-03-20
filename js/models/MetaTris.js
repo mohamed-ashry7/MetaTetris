@@ -1,5 +1,5 @@
 const Board = require("./Board");
-const engine = require("./utils/tetris_engine_utils");
+const engine = require("../utils/pieceUtils");
 const prompt = require("prompt-sync")({ sigint: true });
 
 class MetaTris {
@@ -18,7 +18,7 @@ class MetaTris {
       5: engine.rotateRight,
       6: engine.idle,
     };
-    this.newPiece()
+    this.newPiece();
   }
   newPiece() {
     this.tetrominos += 1;
@@ -29,7 +29,6 @@ class MetaTris {
       this.anchor,
       this.board
     );
-
   }
 
   hasDropped() {
@@ -43,7 +42,7 @@ class MetaTris {
   clearLines() {
     const clearedLines = this.board.clearedLines();
     const newBoard = this.board.zerosLike();
-    let j = this.board.height-1;
+    let j = this.board.height - 1;
     for (let i = j; i >= 0; i--) {
       if (!clearedLines[i]) {
         newBoard.setColumn(j, this.board.getColumn(i));
@@ -56,14 +55,11 @@ class MetaTris {
   }
 
   execAction(action) {
-
     [this.piece, this.anchor] = this.valueActionMap[action](
       this.piece,
       this.anchor,
       this.board
     );
-
-    
   }
 
   play() {
@@ -72,9 +68,8 @@ class MetaTris {
     this.execAction(action);
 
     if (this.hasDropped()) {
-      
       this.board.setPiece(this.piece, this.anchor, 1);
-          
+
       this.clearLines();
 
       if (this.board.isBoardOverFlow()) {
@@ -82,23 +77,22 @@ class MetaTris {
       } else {
         this.newPiece();
       }
-      
+
       this.board.setPiece(this.piece, this.anchor, 0);
     }
-      
-    this.execAction(3)
+
+    this.execAction(3);
     return done;
   }
   run() {
     let done = false;
     this.board.drawBoard(this.piece, this.anchor);
     while (!done) {
-        done = this.play();
-        this.board.drawBoard(this.piece, this.anchor);
+      done = this.play();
+      this.board.drawBoard(this.piece, this.anchor);
     }
   }
 }
 
-
-const p = new MetaTris()
-p.run()
+const p = new MetaTris();
+p.run();
