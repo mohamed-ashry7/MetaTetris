@@ -1,14 +1,15 @@
 const Board = require("./Board");
 const engine = require("../utils/pieceUtils");
-const prompt = require("prompt-sync")({ sigint: true });
 
 class MetaTris {
-  constructor(width = 10, height = 20) {
+  constructor(width = 10, height = 20, speed= 1000) {
     this.board = new Board(width, height);
     this.anchor = null;
     this.piece = null;
     this.tetrominos = 0;
+    this.speed = speed; 
     this.score = 0;
+    this.done=false ;
     this.valueActionMap = {
       0: engine.left,
       1: engine.right,
@@ -62,9 +63,7 @@ class MetaTris {
     );
   }
 
-  play() {
-    let done = false;
-    const action = parseInt(prompt("Enter the action: \n"));
+  play(action) {
     this.execAction(action);
 
     if (this.hasDropped()) {
@@ -73,7 +72,7 @@ class MetaTris {
       this.clearLines();
 
       if (this.board.isBoardOverFlow()) {
-        done = true;
+        this.done = true;
       } else {
         this.newPiece();
       }
@@ -81,18 +80,32 @@ class MetaTris {
       this.board.setPiece(this.piece, this.anchor, 0);
     }
 
-    this.execAction(3);
-    return done;
+  }
+
+  kill() { 
+    clearInterval(this.timer)
   }
   run() {
-    let done = false;
-    this.board.drawBoard(this.piece, this.anchor);
-    while (!done) {
-      done = this.play();
+
+    this.timer = setInterval(()=>{
+      this.play(3);
       this.board.drawBoard(this.piece, this.anchor);
-    }
+      if (this.done){
+        clearInterval(this.timer)
+      }
+    },this.speed); 
+
+    this.board.drawBoard(this.piece, this.anchor);
+    
+     
+  }
+
+  drawBoard(){
+    return this.board.drawBoard(this.piece, this.anchor); 
   }
 }
 
-const p = new MetaTris();
-p.run();
+// const p = new MetaTris();
+// p.run();
+
+module.exports = MetaTris

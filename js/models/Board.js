@@ -54,13 +54,16 @@ class Board {
   }
 
   drawBoard(piece,anchor) { 
-    this.setPiece(piece,anchor,1)
-    const output = this.getTranspose()
-    const line = "o"+Array(this.width).fill("-").join("")+"o"
-    console.log(line)
-    output.forEach(row=>console.log("|"+row.map(val=>val==0?" ":"X").join("")+"|"))
-    console.log(line)
-    this.setPiece(piece,anchor,0)
+    this.setPiece(piece,anchor,1);
+    const output = this.getTranspose();
+    const line = "o"+Array(this.width).fill("-").join("")+"o\n" ; 
+    let grid = line ;
+    // console.log(line)
+    output.forEach(row=>grid +="|"+row.map(val=>val==0?" ":"X").join("")+"|\n");
+    grid += line ;
+    console.log(grid);
+    this.setPiece(piece,anchor,0);
+    return grid;
 
   }
   getCoordinates(x,y){
