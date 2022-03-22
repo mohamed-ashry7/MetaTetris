@@ -1,40 +1,18 @@
 # MetaTris
-The game is ready to be played into the terminal
-the controllers are
-```
-a -> rotate left
+The Updates on js Folder :
 
-d -> rotate right 
+The game can be played on the web server which is nodejs 
+the controllers are for now the by changing the url 
 
-down arrow -> go down
+for example to begin a new game it can be done by accessing the following url
 
-right arrow -> go right
+/play
 
-left arrow -> go left
+this to go right
 
-space -> hard drop
+write in the url
 
-p -> for pausing 
-
-q-> for quiting
-```
+/right and so on 
 
 
-## Layout
-
-
-## Usage
-
-
-```python
-from metatris import MetaTris
- 
-width,height = 10,20
-env = MetaTris(width,height)
-
-```
-
-
-```
-
-
+when the frontend is done it will be played fully.

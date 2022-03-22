@@ -5,7 +5,7 @@ __pycache__/
 .ipynb_checkpoints
 .vscode/
 node_modules
-
+cofake.js
 # Compiled source #
 ###################
 *.com
