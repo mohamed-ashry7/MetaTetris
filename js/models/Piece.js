@@ -43,20 +43,31 @@ const shapes = {
   ],
 };
 const shapeNames = ["T", "J", "L", "Z", "S", "I", "O"];
+const colors = {
+  T: "#800080",
+  J: "#0000FF",
+  L: "#FFA500",
+  Z: "#FF0000",
+  S: "#00FF00",
+  I: "#00FFFF",
+  O: "#FFFF00",
+};
 class Piece {
-  constructor(genuineAnchor) {
-    this.genuineAnchor = genuineAnchor;
+  constructor(board) {
+    this.board = board;
     this.shape = null;
     this.anchor = null;
-    this.tetrominoes= 1 ;
-    this.newShape();
-  }
-
-  newShape() {
     const shape = shapeNames[Math.floor(Math.random() * shapeNames.length)];
+    this.color = colors[shape];
     this.shape = shapes[shape];
-    this.anchor = [...this.genuineAnchor];
-    this.tetrominoes+=1
+    this.anchor = [Math.floor(this.board.width / 2), 0];
+    }
+
+
+  hasDropped() {
+    return this.isOccupiedAnchor(
+      [this.anchor[0], this.anchor[1] + 1],
+    );
   }
 
   rotate(cclk = false) {
@@ -67,6 +78,75 @@ class Piece {
     }
   }
 
-  
+  isOccupied(shape, anchor) {
+    for (const [i, j] of shape) {
+      const [x, y] = [anchor[0] + i, anchor[1] + j];
+      if (y < 0) {
+        continue;
+      }
+      if (
+        x < 0 ||
+        x >= this.board.shape[0] ||
+        y >= this.board.shape[1] ||
+        this.board.getCoordinates(x, y)
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  isOccupiedAnchor(anchor) {
+    return this.isOccupied(this.shape, anchor);
+  }
+
+  isOccupiedShape(shape) {
+    return this.isOccupied(shape, this.anchor);
+  }
+
+  left() {
+    const newAnchor = [this.anchor[0] - 1, this.anchor[1]];
+    if (!this.isOccupiedAnchor(newAnchor)) {
+      this.anchor = newAnchor;
+    }
+  }
+
+  right() {
+    const newAnchor = [this.anchor[0] + 1, this.anchor[1]];
+    if (!this.isOccupiedAnchor(newAnchor)) {
+      this.anchor = newAnchor;
+    }
+  }
+
+  softDrop() {
+    const newAnchor = [this.anchor[0], this.anchor[1] + 1];
+    if (!this.isOccupiedAnchor(newAnchor)) {
+      this.anchor = newAnchor;
+      return true; 
+    }
+    return false;
+  }
+
+  hardDrop() {
+    let drop = true; 
+    while (drop) {
+      drop = this.softDrop(); 
+    }
+  }
+
+  rotateLeft() {
+    const newShape = this.rotate(false);
+    if (!this.isOccupiedShape(newShape)) {
+      this.shape = newShape;
+    }
+  }
+
+  rotateRight() {
+    const newShape = this.rotate(true);
+    if (!this.isOccupiedShape(newShape)) {
+      this.shape = newShape;
+    }
+  }
+
 }
 module.exports = Piece;

@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 
 const app = express()
 
-const playGameRoutes = require('./routes/playGame')
+const playRoutes = require('./routes/play')
 const PORT = 3000
 
 
@@ -18,7 +18,7 @@ app.get('/',(_,res)=>{
 
 }); 
 
-app.use(playGameRoutes)
+app.use(playRoutes)
 
 app.use((_,res)=>{
     res.status(404).send("<h1>The page you are trying to access is not found</h1>")

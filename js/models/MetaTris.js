@@ -1,43 +1,14 @@
 const Board = require("./Board");
-const engine = require("../utils/pieceUtils");
+const Piece = require("./Piece");
 
 class MetaTris {
-  constructor(width = 10, height = 20, speed= 1000) {
+  constructor(width = 10, height = 20, speed = 1000) {
     this.board = new Board(width, height);
-    this.anchor = null;
-    this.piece = null;
-    this.tetrominos = 0;
-    this.speed = speed; 
+    this.tetrominos = 1;
+    this.speed = speed;
     this.score = 0;
-    this.done=false ;
-    this.valueActionMap = {
-      0: engine.left,
-      1: engine.right,
-      2: engine.hardDrop,
-      3: engine.softDrop,
-      4: engine.rotateLeft,
-      5: engine.rotateRight,
-      6: engine.idle,
-    };
-    this.newPiece();
-  }
-  newPiece() {
-    this.tetrominos += 1;
-    this.anchor = [Math.floor(this.board.width / 2), 0];
-    this.piece = engine.newPiece();
-    [this.piece, this.anchor] = engine.softDrop(
-      this.piece,
-      this.anchor,
-      this.board
-    );
-  }
-
-  hasDropped() {
-    return engine.isOccupied(
-      this.piece,
-      [this.anchor[0], this.anchor[1] + 1],
-      this.board
-    );
+    this.done = false;
+    this.piece = new Piece(this.board);
   }
 
   clearLines() {
@@ -56,56 +27,67 @@ class MetaTris {
   }
 
   execAction(action) {
-    [this.piece, this.anchor] = this.valueActionMap[action](
-      this.piece,
-      this.anchor,
-      this.board
-    );
+    if (action===0){
+        this.piece.left();
+    }
+    else if (action===1){
+        this.piece.right();
+    }
+    else if (action===2){
+        this.piece.hardDrop();
+    }
+    else if (action===3){
+        this.piece.softDrop();
+    }
+    else if (action===4){
+        this.piece.rotateLeft();
+    }
+    else if (action===5){
+        this.piece.rotateRight();
+    }
   }
 
   play(action) {
     this.execAction(action);
 
-    if (this.hasDropped()) {
-      this.board.setPiece(this.piece, this.anchor, 1);
+    if (this.piece.hasDropped()) {
+      this.board.setPiece(this.piece, 1);
 
       this.clearLines();
 
       if (this.board.isBoardOverFlow()) {
         this.done = true;
       } else {
-        this.newPiece();
+        this.piece = new Piece(this.board);
+        this.tetrominos+=1;
       }
 
-      this.board.setPiece(this.piece, this.anchor, 0);
+      this.board.setPiece(this.piece, 0);
     }
-
   }
 
-  kill() { 
-    clearInterval(this.timer)
+  kill() {
+    clearInterval(this.timer);
   }
   run() {
-
-    this.timer = setInterval(()=>{
+    this.timer = setInterval(() => {
       this.play(3);
-      this.board.drawBoard(this.piece, this.anchor);
-      if (this.done){
-        clearInterval(this.timer)
+      this.board.drawBoard(this.piece);
+      if (this.done) {
+        clearInterval(this.timer);
       }
-    },this.speed); 
+    }, this.speed);
 
-    this.board.drawBoard(this.piece, this.anchor);
-    
-     
+    this.board.drawBoard(this.piece);
   }
 
-  drawBoard(){
-    return this.board.drawBoard(this.piece, this.anchor); 
+  drawBoard() {
+    return this.board.drawBoard(this.piece);
   }
+
 }
 
 // const p = new MetaTris();
 // p.run();
 
-module.exports = MetaTris
+module.exports = MetaTris;
