@@ -19,7 +19,7 @@ exports.play = (req, res) => {
       game
         .drawBoard()
         .split("\n")
-        .map((e) => `<p>${e}</p>`)
+        .map((e) => `${e}`)
     );
   };
 
@@ -29,7 +29,7 @@ exports.left =(req, res) => {
       game
         .drawBoard()
         .split("\n")
-        .map((e) => `<p>${e}</p>`)
+        .map((e) => `${e}`)
     );
   };
 
@@ -39,7 +39,7 @@ exports.right = (req, res) => {
       game
         .drawBoard()
         .split("\n")
-        .map((e) => `<p>${e}</p>`)
+        .map((e) => `${e}`)
     );
   } ;
 
@@ -49,7 +49,7 @@ exports.hardDrop = (req, res) => {
       game
         .drawBoard()
         .split("\n")
-        .map((e) => `<p>${e}</p>`)
+        .map((e) => `${e}`)
     );
   };
 
@@ -59,7 +59,7 @@ exports.rotateLeft=(req, res) => {
       game
         .drawBoard()
         .split("\n")
-        .map((e) => `<p>${e}</p>`)
+        .map((e) => `${e}`)
     );
   };
 exports.rotateRight = (req, res) => {
@@ -68,6 +68,6 @@ exports.rotateRight = (req, res) => {
       game
         .drawBoard()
         .split("\n")
-        .map((e) => `<p>${e}</p>`)
+        .map((e) => `${e}`)
     );
   };

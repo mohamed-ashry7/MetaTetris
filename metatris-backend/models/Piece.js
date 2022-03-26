@@ -44,13 +44,13 @@ const shapes = {
 };
 const shapeNames = ["T", "J", "L", "Z", "S", "I", "O"];
 const colors = {
-  T: "#800080",
-  J: "#0000FF",
-  L: "#FFA500",
-  Z: "#FF0000",
-  S: "#00FF00",
-  I: "#00FFFF",
-  O: "#FFFF00",
+  T: "P",
+  J: "B",
+  L: "O",
+  Z: "R",
+  S: "G",
+  I: "C",
+  O: "Y",
 };
 class Piece {
   constructor(board) {
@@ -64,13 +64,13 @@ class Piece {
     }
 
 
-  hasDropped() {
+  hasDropped=()=> {
     return this.isOccupiedAnchor(
       [this.anchor[0], this.anchor[1] + 1],
     );
   }
 
-  rotate(cclk = false) {
+  rotate=(cclk = false)=> {
     if (cclk) {
       return this.shape.map(([i, j]) => [-j, i]);
     } else {
@@ -78,7 +78,7 @@ class Piece {
     }
   }
 
-  isOccupied(shape, anchor) {
+  isOccupied=(shape, anchor)=> {
     for (const [i, j] of shape) {
       const [x, y] = [anchor[0] + i, anchor[1] + j];
       if (y < 0) {
@@ -96,29 +96,29 @@ class Piece {
     return false;
   }
 
-  isOccupiedAnchor(anchor) {
+  isOccupiedAnchor=(anchor)=> {
     return this.isOccupied(this.shape, anchor);
   }
 
-  isOccupiedShape(shape) {
+  isOccupiedShape=(shape)=> {
     return this.isOccupied(shape, this.anchor);
   }
 
-  left() {
+  left=()=> {
     const newAnchor = [this.anchor[0] - 1, this.anchor[1]];
     if (!this.isOccupiedAnchor(newAnchor)) {
       this.anchor = newAnchor;
     }
   }
 
-  right() {
+  right=()=> {
     const newAnchor = [this.anchor[0] + 1, this.anchor[1]];
     if (!this.isOccupiedAnchor(newAnchor)) {
       this.anchor = newAnchor;
     }
   }
 
-  softDrop() {
+  softDrop=()=> {
     const newAnchor = [this.anchor[0], this.anchor[1] + 1];
     if (!this.isOccupiedAnchor(newAnchor)) {
       this.anchor = newAnchor;
@@ -127,21 +127,21 @@ class Piece {
     return false;
   }
 
-  hardDrop() {
+  hardDrop=()=> {
     let drop = true; 
     while (drop) {
       drop = this.softDrop(); 
     }
   }
 
-  rotateLeft() {
+  rotateLeft=()=> {
     const newShape = this.rotate(false);
     if (!this.isOccupiedShape(newShape)) {
       this.shape = newShape;
     }
   }
 
-  rotateRight() {
+  rotateRight=()=> {
     const newShape = this.rotate(true);
     if (!this.isOccupiedShape(newShape)) {
       this.shape = newShape;

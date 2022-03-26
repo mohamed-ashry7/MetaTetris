@@ -9,7 +9,7 @@ class Board {
       this.board.shape;
     }
   
-    clearedLines() {
+    clearedLines = ()=> {
       const arr = [];
       for (let j = 0; j < this.height; j++) {
         let flag = true;
@@ -22,20 +22,20 @@ class Board {
       }
       return arr;
     }
-    zerosLike() {
+    zerosLike = () => {
       return new Board(this.width, this.height);
     }
-    getColumn(c) {
+    getColumn= (c)=> {
       return this.board.map((value) => value[c]);
     }
   
-    setColumn(c, newCol) {
+    setColumn= (c, newCol)=> {
       for (let i = 0; i < this.width; i++) {
         this.board[i][c] = newCol[i];
       }
     }
   
-    setPiece(piece, visible) {
+    setPiece = (piece, visible)=> {
       for (const [i, j] of piece.shape) {
         const [x, y] = [i + piece.anchor[0], j + piece.anchor[1]];
         if (x < this.width && x >= 0 && y < this.height && y >= 0) {
@@ -44,29 +44,30 @@ class Board {
       }
     }
   
-    isBoardOverFlow() {
+    isBoardOverFlow= ()=> {
       return this.board.map((value) => value[0]).reduce((a, b) => a + b) > 0;
     }
   
-    getTranspose(){
+    getTranspose=()=>{
       return this.board[0].map((_, colIndex) => this.board.map((row) => row[colIndex]));
   
     }
   
-    drawBoard(piece) { 
+    drawBoard =(piece)=> { 
+
+      
       this.setPiece(piece,1);
       const output = this.getTranspose();
-      const line = "o"+Array(this.width).fill("-").join("")+"o\n" ; 
-      let grid = line ;
-      // console.log(line)
-      output.forEach(row=>grid +="|"+row.map(val=>val==0?" ":"X").join("")+"|\n");
+      const line = "o"+Array(this.width).fill("-").join("")+"o" ; 
+      let grid = line+'\n' ;
+      output.forEach(row=>grid +="|"+row.map(val=>val==0?" ":piece.color).join("")+"|\n");
       grid += line ;
       console.log(grid);
       this.setPiece(piece,0);
       return grid;
   
     }
-    getCoordinates(x,y){
+    getCoordinates=(x,y)=>{
         return this.board[x][y]
     }
   }

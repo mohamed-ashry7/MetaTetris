@@ -11,7 +11,7 @@ class MetaTris {
     this.piece = new Piece(this.board);
   }
 
-  clearLines() {
+  clearLines =()=> {
     const clearedLines = this.board.clearedLines();
     const newBoard = this.board.zerosLike();
     let j = this.board.height - 1;
@@ -26,7 +26,7 @@ class MetaTris {
     this.score += clearedLines.reduce((a, b) => a + b);
   }
 
-  execAction(action) {
+  execAction=(action)=> {
     if (action===0){
         this.piece.left();
     }
@@ -47,7 +47,7 @@ class MetaTris {
     }
   }
 
-  play(action) {
+  play=(action)=> {
     this.execAction(action);
 
     if (this.piece.hasDropped()) {
@@ -66,10 +66,10 @@ class MetaTris {
     }
   }
 
-  kill() {
+  kill=()=> {
     clearInterval(this.timer);
   }
-  run() {
+  run=()=> {
     this.timer = setInterval(() => {
       this.play(3);
       this.board.drawBoard(this.piece);
@@ -81,7 +81,7 @@ class MetaTris {
     this.board.drawBoard(this.piece);
   }
 
-  drawBoard() {
+  drawBoard=()=> {
     return this.board.drawBoard(this.piece);
   }
 
