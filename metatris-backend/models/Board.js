@@ -52,18 +52,27 @@ class Board {
       return this.board[0].map((_, colIndex) => this.board.map((row) => row[colIndex]));
   
     }
+
+    showPiece=(piece)=>{
+      this.setPiece(piece,piece.color.charCodeAt(0));
+    }
+    hidePiece=(piece)=>{
+      this.setPiece(piece,0);
+
+    }
+
   
     drawBoard =(piece)=> { 
 
       
-      this.setPiece(piece,1);
+      this.showPiece(piece);
       const output = this.getTranspose();
       const line = "o"+Array(this.width).fill("-").join("")+"o" ; 
       let grid = line+'\n' ;
-      output.forEach(row=>grid +="|"+row.map(val=>val==0?" ":piece.color).join("")+"|\n");
+      output.forEach(row=>grid +="|"+row.map(val=>val==0?" ":String.fromCharCode(val)).join("")+"|\n");
       grid += line ;
       console.log(grid);
-      this.setPiece(piece,0);
+      this.hidePiece(piece);
       return grid;
   
     }

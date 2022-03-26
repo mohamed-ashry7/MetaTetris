@@ -51,7 +51,7 @@ class MetaTris {
     this.execAction(action);
 
     if (this.piece.hasDropped()) {
-      this.board.setPiece(this.piece, 1);
+      this.board.showPiece(this.piece);
 
       this.clearLines();
 
@@ -62,7 +62,7 @@ class MetaTris {
         this.tetrominos+=1;
       }
 
-      this.board.setPiece(this.piece, 0);
+      this.board.hidePiece(this.piece);
     }
   }
 
