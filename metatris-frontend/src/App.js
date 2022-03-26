@@ -1,15 +1,11 @@
-import './App.css';
-import React,{Component} from 'react';
+import "./App.css";
+import React, { Component } from "react";
 
-import MetaTrisBoard from './Components/MetaTrisBoard/MetaTrisBoard';
-
-
+import MetaTrisBoard from "./Components/MetaTrisBoard/MetaTrisBoard";
 
 class App extends Component {
-
   state = {
-    mBoard:
-    [
+    mBoard: [
       "o----------o",
       "|    RR    |",
       "|     B    |",
@@ -31,35 +27,34 @@ class App extends Component {
       "|     O    |",
       "|     O    |",
       "|     OO   |",
-      "o----------o"
-      
-  ]
-  }
+      "o----------o",
+    ],
+  };
 
-  handleKeyPresses = (event)=>{
-    
+  handleKeyPresses = (event) => {
     const keys = {
-      37:0,  // Left  left arrow
-      39:1,  // Right  right arrow
-      32:2,  // hardDrop space
-      65:4,  // rotate Left
-      68:5   // rotate right
-    }
-    console.log(keys[event.keyCode]||-1)
-  }
+      37: 0, // Left  left arrow
+      39: 1, // Right  right arrow
+      32: 2, // hardDrop space
+      65: 4, // rotate Left
+      68: 5, // rotate right
+    };
+    const action = keys[event.keyCode] === undefined ? -1 : keys[event.keyCode];
+    console.log(action);
+  };
 
   render() {
-    return(
-
+    return (
       <div>
         <header>The board</header>
-        <MetaTrisBoard mBoard ={this.state.mBoard} handleKeyPresses={this.handleKeyPresses}/>
+        <MetaTrisBoard
+          mBoard={this.state.mBoard}
+          handleKeyPresses={this.handleKeyPresses}
+        />
       </div>
     );
   }
 }
-
-
 
 //  Will be converted to Hooks afterwards;
 // function App() {
