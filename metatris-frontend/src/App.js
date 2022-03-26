@@ -2,33 +2,15 @@ import "./App.css";
 import React, { Component } from "react";
 
 import MetaTrisBoard from "./Components/MetaTrisBoard/MetaTrisBoard";
+import axios from "axios";
+const playGameUrl = "http://localhost:4000/playGame";
 
 class App extends Component {
+
   state = {
-    mBoard: [
-      "o----------o",
-      "|    RR    |",
-      "|     B    |",
-      "|     B    |",
-      "|    BB    |",
-      "|    GG    |",
-      "|     GG   |",
-      "|     P    |",
-      "|    PPP   |",
-      "|     P    |",
-      "|    PPP   |",
-      "|     B    |",
-      "|     B    |",
-      "|    BB    |",
-      "|     C    |",
-      "|     C    |",
-      "|     C    |",
-      "|     C    |",
-      "|     O    |",
-      "|     O    |",
-      "|     OO   |",
-      "o----------o",
-    ],
+    mBoard: " \n ",
+    score:0,
+    gameOver:true
   };
 
   handleKeyPresses = (event) => {
@@ -40,29 +22,45 @@ class App extends Component {
       68: 5, // rotate right
     };
     const action = keys[event.keyCode] === undefined ? -1 : keys[event.keyCode];
-    console.log(action);
+    this.fetchData(action);
+  };
+
+  fetchData =(action=-1)=>{
+    
+      axios.put(playGameUrl, { action: action }).then((res) => {
+
+        this.setState({ mBoard: res.data.mBoard ,gameOver:res.data.gameOver,score:res.data.score});
+      });
+    
+  };
+
+  playGame = () => {
+    axios.post(playGameUrl).then((res) => {
+      this.setState({ mBoard: res.data.mBoard ,gameOver:res.data.gameOver,score:res.data.score});
+      const timer = setInterval(() => {
+        this.fetchData();
+        if(this.state.gameOver){
+          clearInterval(timer);
+        }
+        
+      }, 500);
+
+    });
   };
 
   render() {
     return (
       <div>
         <header>The board</header>
-        <MetaTrisBoard
-          mBoard={this.state.mBoard}
-          handleKeyPresses={this.handleKeyPresses}
-        />
+          <MetaTrisBoard
+            mBoard={this.state.mBoard.split('\n')}
+            handleKeyPresses={this.handleKeyPresses}
+          />
+        <button onClick={this.playGame}>playyy a Gameee</button>
       </div>
     );
   }
 }
 
-//  Will be converted to Hooks afterwards;
-// function App() {
-//   return (
-//     <div className="App">
-//       <header>Hello Tetris</header>
-//     </div>
-//   );
-// }
 
 export default App;

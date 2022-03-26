@@ -1,7 +1,6 @@
 const MetaTris = require("../models/MetaTris");
 let game = null;
 
-
 exports.play = (req, res) => {
   if (game) {
     game.kill();
@@ -10,68 +9,23 @@ exports.play = (req, res) => {
   game = new MetaTris();
   game.run();
   res.send(
-    game
-      .drawBoard()
-      .split("\n")
-      .map((e) => `${e}`)
+    {
+      mBoard: game.drawBoard(),
+      score: game.score,
+      gameOver: game.done,
+    }
   );
 };
 
 exports.execAction = (req, res) => {
+  if (game){
   game.play(req.body.action);
   res.send(
-    game
-      .drawBoard()
-      .split("\n")
-      .map((e) => `${e}`)
+    {
+      mBoard: game.drawBoard(),
+      score: game.score,
+      gameOver: game.done,
+    }
   );
+  }
 };
-
-// exports.left =(req, res) => {
-//     game.play(0);
-//     res.send(
-//       game
-//         .drawBoard()
-//         .split("\n")
-//         .map((e) => `${e}`)
-//     );
-//   };
-
-// exports.right = (req, res) => {
-//     game.play(1);
-//     res.send(
-//       game
-//         .drawBoard()
-//         .split("\n")
-//         .map((e) => `${e}`)
-//     );
-//   } ;
-
-// exports.hardDrop = (req, res) => {
-//     game.play(2);
-//     res.send(
-//       game
-//         .drawBoard()
-//         .split("\n")
-//         .map((e) => `${e}`)
-//     );
-//   };
-
-// exports.rotateLeft=(req, res) => {
-//     game.play(4);
-//     res.send(
-//       game
-//         .drawBoard()
-//         .split("\n")
-//         .map((e) => `${e}`)
-//     );
-//   };
-// exports.rotateRight = (req, res) => {
-//     game.play(5);
-//     res.send(
-//       game
-//         .drawBoard()
-//         .split("\n")
-//         .map((e) => `${e}`)
-//     );
-//   };
