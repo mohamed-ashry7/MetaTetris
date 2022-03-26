@@ -1,20 +1,6 @@
 const MetaTris = require("../models/MetaTris");
 let game = null;
-const possibleActions = {
-  left: 0,
-  right: 1,
-  hardDrop: 2,
-  softDrop: 3,
-  rotateLeft: 4,
-  rotateRight: 5,
-};
-// 0: left,
-// 1: right,
-// 2: hard_drop,
-// 3: soft_drop,
-// 4: rotate_left,
-// 5: rotate_right,
-// 6: idle,
+
 
 exports.play = (req, res) => {
   if (game) {

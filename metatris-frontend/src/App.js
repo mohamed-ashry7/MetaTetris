@@ -35,12 +35,25 @@ class App extends Component {
       
   ]
   }
+
+  handleKeyPresses = (event)=>{
+    
+    const keys = {
+      37:0,  // Left  left arrow
+      39:1,  // Right  right arrow
+      32:2,  // hardDrop space
+      65:4,  // rotate Left
+      68:5   // rotate right
+    }
+    console.log(keys[event.keyCode]||-1)
+  }
+
   render() {
     return(
 
       <div>
         <header>The board</header>
-        <MetaTrisBoard mBoard ={this.state.mBoard}/>
+        <MetaTrisBoard mBoard ={this.state.mBoard} handleKeyPresses={this.handleKeyPresses}/>
       </div>
     );
   }
