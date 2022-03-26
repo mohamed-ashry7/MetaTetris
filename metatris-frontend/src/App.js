@@ -1,25 +1,57 @@
-import logo from './logo.svg';
 import './App.css';
+import React,{Component} from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import MetaTrisBoard from './Components/MetaTrisBoard/MetaTrisBoard';
+
+
+
+class App extends Component {
+
+  state = {
+    mBoard:
+    ["o----------o",
+    "|          |",
+    "|          |",
+    "|  X       |",
+    "|  X       |",
+    "| XX       |",
+    "|          |",
+    "|          |",
+    "|          |",
+    "|          |",
+    "|          |",
+    "|          |",
+    "|          |",
+    "|          |",
+    "|          |",
+    "|          |",
+    "|          |",
+    "|          |",
+    "|          |",
+    "|          |",
+    "|          |",
+    "o----------o"]
+  }
+  render() {
+    return(
+
+      <div>
+        <header>The board</header>
+        <MetaTrisBoard mBoard ={this.state.mBoard}/>
+      </div>
+    );
+  }
 }
+
+
+
+//  Will be converted to Hooks afterwards;
+// function App() {
+//   return (
+//     <div className="App">
+//       <header>Hello Tetris</header>
+//     </div>
+//   );
+// }
 
 export default App;
