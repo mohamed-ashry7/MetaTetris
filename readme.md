@@ -1,18 +1,35 @@
 # MetaTris
-The Updates on js Folder :
-
-The game can be played on the web server which is nodejs 
-the controllers are for now the by changing the url 
-
-for example to begin a new game it can be done by accessing the following url
-
-/play
-
-this to go right
-
-write in the url
-
-/right and so on 
 
 
-when the frontend is done it will be played fully.
+## Running
+
+The application is divided into two parts:
+* metatris-backend
+* metatris-frontend 
+
+Both the two servers are containerized using docker to make the application easy to run and install.
+### Steps
+1) Download docker software to your machine.
+2) Run the command in the root of the directory.
+```bash
+docker-compose up
+```
+3) Open the browser and then go to [http://localhost:3000/](http://localhost:3000/)
+
+### To play the game:
+
+#### Controllers:
+
+| Action         | Key          | 
+| ------------- | ------------- | 
+| Move Left      | Left Arrow | 
+| Move Right      | Right Arrow      |
+| Move Down (Soft Drop) | Down Arrow      |
+| Hard Drop      | S-Key | 
+| Rotate Left      | A-Key      |
+| Rotate Right | D-Key   |
+
+## Development phase:
+* The backend server is running on the [http://localhost:4000/](http://localhost:4000/)
+* The frontend server is running on the [http://localhost:3000/](http://localhost:3000/)
+

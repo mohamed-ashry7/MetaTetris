@@ -15,11 +15,12 @@ class App extends Component {
 
   handleKeyPresses = (event) => {
     const keys = {
-      37: 0, // Left  left arrow
-      39: 1, // Right  right arrow
-      32: 2, // hardDrop space
-      65: 4, // rotate Left
-      68: 5, // rotate right
+      37: 0, // Left  Left Arrow
+      39: 1, // Right  Right Arrow
+      83: 2, // hardDrop S-Key
+      40: 3, // softDrop Down Arrow
+      65: 4, // rotate Left A-Key
+      68: 5, // rotate right D-Key
     };
     const action = keys[event.keyCode] === undefined ? -1 : keys[event.keyCode];
     this.fetchData(action);
