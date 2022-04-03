@@ -28,7 +28,6 @@ class App extends Component {
   fetchData =(action=-1)=>{
     
       axios.put(playGameUrl, { action: action }).then((res) => {
-
         this.setState({ mBoard: res.data.mBoard ,gameOver:res.data.gameOver,score:res.data.score});
       });
     
@@ -56,6 +55,7 @@ class App extends Component {
             mBoard={this.state.mBoard.split('\n')}
             handleKeyPresses={this.handleKeyPresses}
           />
+          <p>score: {this.state.score}</p>
         <button onClick={this.playGame}>playyy a Gameee</button>
       </div>
     );
