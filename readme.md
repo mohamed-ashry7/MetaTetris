@@ -29,6 +29,10 @@ docker-compose up
 | Rotate Left      | A-Key      |
 | Rotate Right | D-Key   |
 
+#### Snapshot of the game:
+
+![Screenshot of the game](https://i.ibb.co/8jz51rJ/Screenshot-from-2022-04-03-23-17-38.png)
+
 ## Development phase:
 * The backend server is running on the [http://localhost:4000/](http://localhost:4000/)
 * The frontend server is running on the [http://localhost:3000/](http://localhost:3000/)
