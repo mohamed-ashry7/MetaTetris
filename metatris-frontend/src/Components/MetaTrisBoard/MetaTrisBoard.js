@@ -6,8 +6,8 @@ const MetaTrisBoard = ({ mBoard, handleKeyPresses }) => {
   const width = mBoard[0].length;
   const height = mBoard.length;
   const style = {
-    gridTemplateColumns: `repeat( ${width}, 35px)`,
-    gridTemplateRows: `repeat(${height}, 35px)`,
+    gridTemplateColumns: `repeat( ${12}, 35px)`,
+    gridTemplateRows: `repeat(${22}, 35px)`,
   };
   return (
     <div
